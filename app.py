@@ -1,12 +1,13 @@
+import os
+import langdetect
+import twilio.twiml
 from flask import Flask, request, redirect, make_response, session
 from translation import detectLanguage, translate
 from datetime import timedelta
-import langdetect
-import twilio.twiml
 
 
 app = Flask(__name__)
-app.secret_key = 'SECRET'
+app.secret_key = os.environ['SESSION_KEY']
 app.permanent_session_lifetime = timedelta(minutes=60)
 app.config.from_object(__name__)
 

@@ -1,6 +1,5 @@
 from google.cloud import translate
-APIKey = 'KEY'
-client = translate.Client(APIKey)
+client = translate.Client(os.environ['TRANSLATE_KEY'])
 
 #To-do: Confidence checks in language detection
 def detectLanguage(message):
