@@ -1,5 +1,6 @@
 import os
 from google.cloud import translate
+
 client = translate.Client(os.environ['TRANSLATE_KEY'])
 
 #To-do: Confidence checks in language detection
