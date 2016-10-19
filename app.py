@@ -15,7 +15,7 @@ def SMS():
     message = request.values.get('Body', None)
     # Clearing session. lowercase and source detection
     messageTranslated = translate(request.values.get('Body', None),'en')
-    if messageTranslated.lower() == "help" or messageTranslated.lower() == "end":
+    if messageTranslated.lower() == "hello" or messageTranslated.lower() == "hi":
         session.clear()
 
     #Language detection + Mode Question
