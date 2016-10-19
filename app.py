@@ -12,6 +12,7 @@ app.config.from_object(__name__)
 
 @app.route('/', methods=['GET','POST'])
 def SMS():
+    session.clear()
     message = request.values.get('Body', None)
     # Clearing session. lowercase and source detection
     messageTranslated = translate(request.values.get('Body', None),'en')
@@ -44,7 +45,7 @@ def SMS():
             resp = twilio.twiml.Response()
             resp.message(respMessage)
             return str(resp)
-        respMessage = translate("Where are you travelling from? Enter full address", language, 'en')
+        respMessage = translate("Where are you travelling from? Please enter the full address", language, 'en')
         resp = twilio.twiml.Response()
         resp.message(respMessage)
         return str(resp)
@@ -54,7 +55,7 @@ def SMS():
         toAddress = session['to']
     except KeyError:
         session['to'] = translate(message, "en", language)
-        respMessage = translate("Where is your destination? Enter full address", language, 'en')
+        respMessage = translate("What is your destination? Please enter the full address", language, 'en')
         resp = twilio.twiml.Response()
         resp.message(respMessage)
         return str(resp)
