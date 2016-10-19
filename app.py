@@ -44,7 +44,7 @@ def SMS():
             resp = twilio.twiml.Response()
             resp.message(respMessage)
             return str(resp)
-        respMessage = "Where are you travelling from? Please enter the full address"
+        respMessage = translate("Where are you travelling from? Please enter the full address",language,"en")
         resp = twilio.twiml.Response()
         resp.message(respMessage)
         return str(resp)
