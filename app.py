@@ -40,7 +40,7 @@ def SMS():
         elif message == '3':
             session['mode'] = 'transit'
         else:
-            respMessage = "What is your mode of transportation? Type 1 for driving, 2 for walking, or 3 for transit."
+            respMessage = translate("What is your mode of transportation? Type 1 for driving, 2 for walking, or 3 for transit",language,"en")
             resp = twilio.twiml.Response()
             resp.message(respMessage)
             return str(resp)
