@@ -1,5 +1,4 @@
 import os
-import langdetect
 import twilio.twiml
 from flask import Flask, request, redirect, make_response, session
 from translation import detectLanguage, translate

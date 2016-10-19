@@ -3,7 +3,7 @@ from google.cloud import translate
 import html.parser as htmlparser
 
 parser = htmlparser.HTMLParser()
-client = os.environ['TRANSLATE_KEY']
+client = translate.Client(os.environ['TRANSLATE_KEY'])
 
 #To-do: Confidence checks in language detection
 def detectLanguage(message):
