@@ -13,4 +13,4 @@ def translate(message, target, source=None):
     if source == target:
         return message
     else:
-        return parser.unescape(client.translate(message, source_language=source, target_language=target)['translatedText'])
+        return parser.unescape(client.translate(message, source_language=source, target_language=target)['translatedText']
