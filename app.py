@@ -2,6 +2,7 @@ import os
 import twilio.twiml
 from flask import Flask, request, redirect, make_response, session
 from translation import detectLanguage, translate
+from directions import getDirections
 from datetime import timedelta
 
 app = Flask(__name__)
@@ -43,21 +44,30 @@ def SMS():
             resp = twilio.twiml.Response()
             resp.message(respMessage)
             return str(resp)
-        respMessage = translate("Where are you travelling from? Please enter the full address",language,"en")
+    # From location
+    try:
+        fromLocation = session['fromLocation']
+    except KeyError:
+        respMessage = translate("Where are you travelling from? Please enter the full address", language, "en")
         resp = twilio.twiml.Response()
         resp.message(respMessage)
         return str(resp)
 
-    # From detection + To address
+    # To Location
     try:
-        toAddress = session['to']
+        toLocation = session['toLocation']
     except KeyError:
         session['to'] = translate(message, "en", language)
         respMessage = translate("What is your destination? Please enter the full address", language, 'en')
         resp = twilio.twiml.Response()
         resp.message(respMessage)
         return str(resp)
-    return "in progress"
+
+    directions = getDirections(fromLocation, toLocation, mode, language)
+    resp = twilio.twiml.Response()
+    resp.message(directions)
+    session.clear()
+    return str(resp)
 
 if __name__ == "__main__":
     app.run()
