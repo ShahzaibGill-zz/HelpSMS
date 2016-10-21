@@ -9,7 +9,7 @@ Get Directions using SMS!. HelpSMS has automatic language detection, and convers
 * Flask
 * Heroku
 
-## Future Implementation:
+## Future Implementations:
 * Add functionality for checking weather forecast
 * Add functionality for medical diagnosis/treatment
 * Confidence checks in language detection
