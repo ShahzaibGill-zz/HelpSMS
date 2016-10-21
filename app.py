@@ -1,5 +1,6 @@
 import os
 import twilio.twiml
+from twilio.rest import TwilioRestClient
 from flask import Flask, request, redirect, make_response, session
 from translation import detectLanguage, translate
 from directions import getDirections
@@ -12,6 +13,13 @@ app.config.from_object(__name__)
 
 @app.route('/', methods=['GET','POST'])
 def SMS():
+    # Authorization
+    twilioNumber = os.environ['TWILIO_NUMBER']
+    account_sid = os.environ['TWILIO_SID']
+    auth_token = os.environ['TWILIO_AUTH']
+    client = TwilioRestClient(account_sid, auth_token)
+    fromNumber = request.values.get('From', None)
+
     message = request.values.get('Body', None)
     # Clearing session. lowercase and source detection
     messageTranslated = translate(request.values.get('Body', None),'en')
@@ -66,10 +74,17 @@ def SMS():
         toLocation = session['toLocation']
 
     directions = getDirections(fromLocation, toLocation, mode, language)
-    resp = twilio.twiml.Response()
-    resp.message(directions)
-    session.clear()
-    return str(resp)
+    if len(directions) < 1600:
+        directions = [directions[i:i + 1600] for i in range(0, len(directions), 1600)]
+        for direction in directions:
+            message = client.messages.create(to=twilioNumber, from_=fromNumber, body=direction)
+        session.clear()
+        return "Done"
+    else:
+        resp = twilio.twiml.Response()
+        resp.message(directions)
+        session.clear()
+        return str(resp)
 
 if __name__ == "__main__":
     app.run()
