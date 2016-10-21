@@ -44,11 +44,16 @@ def SMS():
             resp = twilio.twiml.Response()
             resp.message(respMessage)
             return str(resp)
+        respMessage = translate("Where are you travelling from? Please enter the full address or Postal Code", language, "en")
+        resp = twilio.twiml.Response()
+        resp.message(respMessage)
+        return str(resp)
     # From location
     try:
         fromLocation = session['fromLocation']
     except KeyError:
-        respMessage = translate("Where are you travelling from? Please enter the full address", language, "en")
+        session['fromLocation'] = message
+        respMessage = translate("Where are you travelling to? Please enter the full address  or Postal Code", language, "en")
         resp = twilio.twiml.Response()
         resp.message(respMessage)
         return str(resp)
@@ -57,11 +62,7 @@ def SMS():
     try:
         toLocation = session['toLocation']
     except KeyError:
-        session['to'] = translate(message, "en", language)
-        respMessage = translate("What is your destination? Please enter the full address", language, 'en')
-        resp = twilio.twiml.Response()
-        resp.message(respMessage)
-        return str(resp)
+        session['toLocation'] = message
 
     directions = getDirections(fromLocation, toLocation, mode, language)
     resp = twilio.twiml.Response()
