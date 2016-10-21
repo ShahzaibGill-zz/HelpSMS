@@ -18,15 +18,16 @@ def SMS():
     account_sid = os.environ['TWILIO_SID']
     auth_token = os.environ['TWILIO_AUTH']
     client = TwilioRestClient(account_sid, auth_token)
-    fromNumber = request.values.get('From', None)
 
+    fromNumber = request.values.get('From', None)
     message = request.values.get('Body', None)
-    # Clearing session. lowercase and source detection
+
+    # Condition for clearing session and restarting dialogue
     messageTranslated = translate(request.values.get('Body', None),'en')
     if messageTranslated.lower() == "hello" or messageTranslated.lower() == "hi":
         session.clear()
 
-    #Language detection + Mode Question
+    #Language detection + Mode of transportation message
     try:
         language = session['language']
     except KeyError:
@@ -37,7 +38,7 @@ def SMS():
         resp.message(respMessage)
         return str(resp)
 
-    # Mode dection + From address
+    # Mode dection + From address message
     try:
         mode = session['mode']
     except KeyError:
@@ -56,7 +57,8 @@ def SMS():
         resp = twilio.twiml.Response()
         resp.message(respMessage)
         return str(resp)
-    # From location
+
+    # From address detection + To address message
     try:
         fromLocation = session['fromLocation']
     except KeyError:
@@ -66,14 +68,16 @@ def SMS():
         resp.message(respMessage)
         return str(resp)
 
-    # To Location
+    # To address detection
     try:
         toLocation = session['toLocation']
     except KeyError:
         session['toLocation'] = message
         toLocation = session['toLocation']
 
+    # Sending directions
     directions = getDirections(fromLocation, toLocation, mode, language)
+    # Twilio only allows for messages of length 1600. Thus, larger messages need to be split.
     if len(directions) > 1600:
         directions = [directions[i:i + 1600] for i in range(0, len(directions), 1600)]
         for direction in directions:
