@@ -77,7 +77,7 @@ def SMS():
     if len(directions) > 1600:
         directions = [directions[i:i + 1600] for i in range(0, len(directions), 1600)]
         for direction in directions:
-            message = client.messages.create(to=twilioNumber, from_=fromNumber, body=direction)
+            message = client.messages.create(to=fromNumber, from_=twilioNumber, body=direction)
         session.clear()
         return "Done"
     else:
