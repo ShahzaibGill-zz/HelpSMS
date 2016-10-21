@@ -63,6 +63,7 @@ def SMS():
         toLocation = session['toLocation']
     except KeyError:
         session['toLocation'] = message
+        toLocation = session['toLocation']
 
     directions = getDirections(fromLocation, toLocation, mode, language)
     resp = twilio.twiml.Response()
