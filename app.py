@@ -79,7 +79,7 @@ def SMS():
         for direction in directions:
             message = client.messages.create(to=fromNumber, from_=twilioNumber, body=direction)
         session.clear()
-        return "Done"
+        return "Messages Sent"
     else:
         resp = twilio.twiml.Response()
         resp.message(directions)
