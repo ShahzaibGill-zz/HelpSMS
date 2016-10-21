@@ -1,22 +1,17 @@
 # HelpSMS
 
-To do (Prob this weekend):
+Get Directions using SMS!. HelpSMS has automatic language detection, and converses with user with the appropriate language. This application is built with the idea of helping people in countries where they have access to cell phones but not the Internet. 
 
-1. Twilio SMS Send/Receive (Shahzaib working on it. Will be done soon)
-2. Google Directions API integration
-  - (First message will ask how user is travelling, next will ask from/to location)
-3. Translation wrapper (so we can just wrap the incoming/outgoing message in the appropriate language)
+## Tech Stack
+* Python 3.5.2
+* Twilio
+* Google Cloud Platform
+* Flask
+* Heroku
 
+## Future Implementations:
+* Add functionality for checking weather forecast
+* Add functionality for medical diagnosis/treatment
+* Confidence checks in language detection
+* Error handling improvements
 
-
-Future:
-
-1. Directions
-2. WebMD/Medical diagnosis analysis
-3. Weather
-
-// Can you think of any other uses?
-http://www.infoplease.com/ipa/A0921862.html
-
-
-#To-do: Confidence checks in language detection
