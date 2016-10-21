@@ -48,11 +48,11 @@ def SMS():
         elif message == '3':
             session['mode'] = 'transit'
         else:
-            respMessage = translate("What is your mode of transportation? Type 1 for driving, 2 for walking, or 3 for transit",language,"en")
+            respMessage = translate("What is your mode of transportation? Type 1 for driving, 2 for walking, or 3 for transit.",language,"en")
             resp = twilio.twiml.Response()
             resp.message(respMessage)
             return str(resp)
-        respMessage = translate("Where are you travelling from? Please enter the full address or Postal Code", language, "en")
+        respMessage = translate("Where are you travelling from? Please enter the full address or postal code", language, "en")
         resp = twilio.twiml.Response()
         resp.message(respMessage)
         return str(resp)
@@ -61,7 +61,7 @@ def SMS():
         fromLocation = session['fromLocation']
     except KeyError:
         session['fromLocation'] = message
-        respMessage = translate("Where are you travelling to? Please enter the full address  or Postal Code", language, "en")
+        respMessage = translate("Where are you travelling to? Please enter the full address  or postal code", language, "en")
         resp = twilio.twiml.Response()
         resp.message(respMessage)
         return str(resp)
