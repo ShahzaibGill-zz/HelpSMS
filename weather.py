@@ -3,6 +3,7 @@ import pyowm
 
 #pyowm allows you to specify language as well with two character id -> english = en
 
+#usage example documentation = https://github.com/csparpa/pyowm/wiki/Usage-examples
 
 owm = pyowm.OWM('your-API-key', language='insert-language-here')  # You MUST provide a valid API key
 
