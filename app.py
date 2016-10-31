@@ -14,9 +14,9 @@ app.config.from_object(__name__)
 @app.route('/', methods=['GET','POST'])
 def SMS():
     # Authorization
-    twilioNumber = os.environ['TWILIO_NUMBER']
-    account_sid = os.environ['TWILIO_SID']
-    auth_token = os.environ['TWILIO_AUTH']
+    twilioNumber = os.environ['TEST_TWILIO_NUMBER']
+    account_sid = os.environ['TEST_TWILIO_SID']
+    auth_token = os.environ['TEST_TWILIO_AUTH']
     client = TwilioRestClient(account_sid, auth_token)
 
     fromNumber = request.values.get('From', None)
