@@ -14,9 +14,9 @@ app.config.from_object(__name__)
 @app.route('/', methods=['GET','POST'])
 def SMS():
     # Authorization
-    twilioNumber = os.environ['TEST_TWILIO_NUMBER']
-    account_sid = os.environ['TEST_TWILIO_SID']
-    auth_token = os.environ['TEST_TWILIO_AUTH']
+    twilioNumber = os.environ['TWILIO_NUMBER']
+    account_sid = os.environ['TWILIO_SID']
+    auth_token = os.environ['TWILIO_AUTH']
     client = TwilioRestClient(account_sid, auth_token)
 
     fromNumber = request.values.get('From', None)
@@ -33,7 +33,7 @@ def SMS():
     except KeyError:
         language = detectLanguage(message)
         session['language'] = language
-        respMessage = translate("What is your mode of transportation? Type 1 for driving, 2 for walking, or 3 for transit.",language, 'en')
+        respMessage = translate("Hello! What is your mode of transportation? Type 1 for driving, 2 for walking, or 3 for transit.",language, 'en')
         resp = twilio.twiml.Response()
         resp.message(respMessage)
         return str(resp)
@@ -49,7 +49,7 @@ def SMS():
         elif message == '3':
             session['mode'] = 'transit'
         else:
-            respMessage = translate("What is your mode of transportation? Type 1 for driving, 2 for walking, or 3 for transit.",language,"en")
+            respMessage = translate("Hello! What is your mode of transportation? Type 1 for driving, 2 for walking, or 3 for transit.",language,"en")
             resp = twilio.twiml.Response()
             resp.message(respMessage)
             return str(resp)
